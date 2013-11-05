@@ -2,7 +2,7 @@ var AWS = require('aws-sdk')
 AWS.config.loadFromPath('./config.json')
 var s3 = new AWS.S3({params:{Bucket:'constellational.com'}})
 
-exports.get = function(callback) {
+exports.get = function() {
   console.log("GET request to /api")
   arguments[arguments.length-1]('Up')
 }

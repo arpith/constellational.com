@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+@media all and (min-device-width:320px) {
+  body {font-size:19px;}
+  h1 {font-size:23px;}
+  embed, iframe, object {max-width:100%; max-height:10em;}
+}
+@media all and (min-device-width:768px) {
+  body {font-size:21px;}
+  h1 {font-size:26px;}
+  embed, iframe, object {max-width:100%; max-height:20em;}
+}
+@media all and (min-device-width:1024px) {
+  body {font-size:23px;}
+  h1 {font-size:32px;}
+}
+body {width:36em; max-width:94%; padding-top:0.6em; padding-bottom:0.6em; margin:auto; line-height:1.6em; font-family:courier,serif; text-rendering:optimizeLegibility;}
+a {text-decoration:none; color:black; border-bottom:thin solid black;}
+p,div,img {padding:0 !important; margin:0 !important;}
+img {height:auto !important; max-width:100% !important; float:none !important;}
+p,div {font:inherit !important; line-height:inherit !important;}
+</style>
+<title>Constellational</title>
+</head>
+<body contenteditable="true">
+First off: this is editable! Go ahead, delete everything, write what you want and share the url. How does it work? When you edit this page it picks a random number, updates its url and puts its body on Amazon S3. You can happily share the url (and that version of the document). 
+</body>
+<script>
+window.onload = function(){
+  document.body.style.minHeight = window.innerHeight + "px"
+  document.body.addEventListener("input",function(){
+    var id = Math.random().toString(36).slice(2)
+    , xhr = new XMLHttpRequest()
+    history.replaceState({id:id},'',id)
+    xhr.open("POST","/api/"+id)
+    xhr.onload = function(){console.log(this.responseText)}
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    xhr.send(document.documentElement.innerHTML)   
+  },false)
+  document.getElementById('bookmarklet').innerHTML = "javascript:try{constellational()}catch(e){constellational={'token':'"+Math.random().toString(16).slice(2,8)+"'};document.body.appendChild(document.createElement('script').src='https://constellational.com/bookmarklet.js');}"
+}
+</script>
+</html>
